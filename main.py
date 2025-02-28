@@ -197,6 +197,7 @@ class TicTacToe(QMainWindow):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
+    app.setWindowIcon(QIcon("./img/logo.png"))
 
     # Set global style
     app.setStyleSheet(
