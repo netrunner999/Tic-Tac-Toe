@@ -13,8 +13,9 @@ from PyQt6.QtWidgets import (
     QComboBox,
     QScrollArea,
     QSizePolicy,
-    QGraphicsOpacityEffect,  # Перенесено сюда
+    QGraphicsOpacityEffect, 
 )
+
 from PyQt6.QtCore import (
     Qt,
     QPropertyAnimation,
@@ -22,6 +23,7 @@ from PyQt6.QtCore import (
     QTimer,
     QSize,
 )
+
 from PyQt6.QtGui import (
     QFont,
     QColor,
@@ -29,11 +31,14 @@ from PyQt6.QtGui import (
     QBrush,
     QPalette,
     QIcon,
-    QPainter,
+    # QPainter,
 )
 
 class SciFiButton(QPushButton):
     def __init__(self, text, parent=None):
+        """
+        Initializes a custom Sci-Fi styled button with specific font and size settings.
+        """
         super().__init__(text, parent)
         self.setFont(QFont("Orbitron", 14, QFont.Weight.Bold))
         self.setMinimumSize(60, 60)
@@ -41,11 +46,17 @@ class SciFiButton(QPushButton):
 
 class MainMenu(QMainWindow):
     def __init__(self):
+        """
+        Initializes the main menu window and sets up the UI components.
+        """
         super().__init__()
         self.initUI()
         self.set_background()
 
     def initUI(self):
+        """
+        Sets up the main menu UI, including title, input fields, and buttons.
+        """
         self.setWindowTitle("Cyber Tic Tac Toe")
         self.setFixedSize(600, 600)
 
@@ -54,12 +65,10 @@ class MainMenu(QMainWindow):
         layout = QVBoxLayout()
         central_widget.setLayout(layout)
 
-        # Title
         title = QLabel("CYBER TIC TAC TOE")
         title.setAlignment(Qt.AlignmentFlag.AlignCenter)
         title.setFont(QFont("Orbitron", 32, QFont.Weight.Bold))
 
-        # Player inputs
         input_layout = QVBoxLayout()
 
         self.player_x_input = QLineEdit()
@@ -84,7 +93,6 @@ class MainMenu(QMainWindow):
         input_layout.addWidget(QLabel("Player O Name:"))
         input_layout.addWidget(self.player_o_input)
 
-        # Board size selector
         self.size_combobox = QComboBox()
         self.size_combobox.addItems(["3x3 (Classic)", "9x9 (Extended)"])
         self.size_combobox.setStyleSheet("""
@@ -101,7 +109,6 @@ class MainMenu(QMainWindow):
             }
         """)
 
-        # Start button
         start_btn = SciFiButton("Start Game")
         start_btn.clicked.connect(self.start_game)
         start_btn.setStyleSheet("""
@@ -125,6 +132,9 @@ class MainMenu(QMainWindow):
         layout.addWidget(start_btn)
 
     def set_background(self):
+        """
+        Sets the gradient background for the main menu.
+        """
         gradient = QLinearGradient(0, 0, 0, self.height())
         gradient.setColorAt(0.0, QColor(10, 10, 30))
         gradient.setColorAt(1.0, QColor(30, 10, 40))
@@ -134,6 +144,9 @@ class MainMenu(QMainWindow):
         self.setPalette(palette)
 
     def start_game(self):
+        """
+        Starts the game by opening the game window with the selected board size and player names.
+        """
         size_text = self.size_combobox.currentText()
         board_size = 3 if "3x3" in size_text else 9
 
@@ -146,6 +159,9 @@ class MainMenu(QMainWindow):
 
 class GameWindow(QMainWindow):
     def __init__(self, board_size, player_x, player_o):
+        """
+        Initializes the game window with the specified board size and player names.
+        """
         super().__init__()
         self.board_size = board_size
         self.players = {
@@ -156,11 +172,13 @@ class GameWindow(QMainWindow):
         self.initUI()
 
     def initUI(self):
+        """
+        Sets up the game window UI, including the game grid and control buttons.
+        """
         self.setWindowTitle("Cyber Tic Tac Toe")
         self.setMinimumSize(800 if self.board_size == 9 else 600,
                           850 if self.board_size == 9 else 700)
 
-        # Central widget with scroll area for large boards
         scroll = QScrollArea()
         scroll.setWidgetResizable(True)
         scroll.setStyleSheet("background: transparent; border: none;")
@@ -172,12 +190,10 @@ class GameWindow(QMainWindow):
         main_layout = QVBoxLayout()
         central_widget.setLayout(main_layout)
 
-        # Title
         self.title_label = QLabel("Tic Tac Toe")
         self.title_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.title_label.setFont(QFont("Orbitron", 28, QFont.Weight.Bold))
 
-        # Game board
         self.grid = QGridLayout()
         self.grid.setSpacing(5)
         self.buttons = [[SciFiButton("") for _ in range(self.board_size)]
@@ -205,7 +221,6 @@ class GameWindow(QMainWindow):
                 button.clicked.connect(lambda _, r=row, c=col: self.make_move(r, c))
                 self.grid.addWidget(button, row, col)
 
-        # Control buttons
         control_layout = QHBoxLayout()
 
         new_game_btn = SciFiButton("New Game")
@@ -230,17 +245,14 @@ class GameWindow(QMainWindow):
         control_layout.addWidget(new_game_btn)
         control_layout.addWidget(menu_btn)
 
-        # Add widgets to layout
         main_layout.addWidget(self.title_label)
         main_layout.addLayout(self.grid)
         main_layout.addLayout(control_layout)
 
-        # Game state
         self.current_player = random.choice(["X", "O"])
         self.board = [[None for _ in range(self.board_size)]
                     for _ in range(self.board_size)]
 
-        # Animation setup
         self.opacity_effect = QGraphicsOpacityEffect(self.title_label)
         self.title_label.setGraphicsEffect(self.opacity_effect)
 
@@ -255,6 +267,9 @@ class GameWindow(QMainWindow):
         self.set_background()
 
     def set_background(self):
+        """
+        Sets the gradient background for the game window.
+        """
         gradient = QLinearGradient(0, 0, 0, self.height())
         gradient.setColorAt(0.0, QColor(10, 10, 30))
         gradient.setColorAt(1.0, QColor(30, 10, 40))
@@ -264,12 +279,14 @@ class GameWindow(QMainWindow):
         self.setPalette(palette)
 
     def make_move(self, row, col):
+        """
+        Handles a player's move by updating the board and checking for a winner or draw.
+        """
         button = self.buttons[row][col]
         if not self.board[row][col]:
             button.setText(self.current_player)
             self.board[row][col] = self.current_player
 
-            # Animate the move
             original_style = button.styleSheet()
             button.setStyleSheet(original_style + "color: #ff00ff;")
             QTimer.singleShot(200, lambda: button.setStyleSheet(original_style))
@@ -283,11 +300,14 @@ class GameWindow(QMainWindow):
                 self.update_title()
 
     def check_winner(self, last_row, last_col):
+        """
+        Checks if the current player has won the game after their last move.
+        """
         directions = [
-            (0, 1),  # horizontal
-            (1, 0),  # vertical
-            (1, 1),  # diagonal down
-            (1, -1), # diagonal up
+            (0, 1),
+            (1, 0),
+            (1, 1),
+            (1, -1),
         ]
 
         for dr, dc in directions:
@@ -309,9 +329,15 @@ class GameWindow(QMainWindow):
         return False
 
     def check_draw(self):
+        """
+        Checks if the game has ended in a draw.
+        """
         return all(cell is not None for row in self.board for cell in row)
 
     def show_winner(self):
+        """
+        Displays the winner and disables all buttons on the board.
+        """
         for row in self.buttons:
             for button in row:
                 button.setEnabled(False)
@@ -319,13 +345,22 @@ class GameWindow(QMainWindow):
         self.title_label.setText(f"{winner_name} WINS!")
 
     def show_draw(self):
+        """
+        Displays a draw message when the game ends in a tie.
+        """
         self.title_label.setText("DRAW!")
 
     def update_title(self):
+        """
+        Updates the title to indicate the current player's turn.
+        """
         player_name = self.players[self.current_player]
         self.title_label.setText(f"{player_name}'s Turn")
 
     def reset_game(self):
+        """
+        Resets the game board and starts a new game.
+        """
         self.current_player = random.choice(["X", "O"])
         self.board = [[None for _ in range(self.board_size)]
                      for _ in range(self.board_size)]
@@ -336,11 +371,17 @@ class GameWindow(QMainWindow):
                 button.setEnabled(True)
 
     def return_to_menu(self):
+        """
+        Returns to the main menu and closes the game window.
+        """
         self.menu = MainMenu()
         self.menu.show()
         self.close()
 
 if __name__ == "__main__":
+    """
+    Entry point of the application. Initializes and starts the main menu.
+    """
     app = QApplication(sys.argv)
     app.setWindowIcon(QIcon("./img/logo.png"))
     app.setStyleSheet("""
