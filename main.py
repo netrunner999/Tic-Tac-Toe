@@ -13,7 +13,7 @@ from PyQt6.QtWidgets import (
     QComboBox,
     QScrollArea,
     QSizePolicy,
-    QGraphicsOpacityEffect, 
+    QGraphicsOpacityEffect,
 )
 
 from PyQt6.QtCore import (
@@ -31,8 +31,8 @@ from PyQt6.QtGui import (
     QBrush,
     QPalette,
     QIcon,
-    # QPainter,
 )
+
 
 class SciFiButton(QPushButton):
     def __init__(self, text, parent=None):
@@ -73,7 +73,8 @@ class MainMenu(QMainWindow):
 
         self.player_x_input = QLineEdit()
         self.player_x_input.setPlaceholderText("Player X")
-        self.player_x_input.setStyleSheet("""
+        self.player_x_input.setStyleSheet(
+            """
             QLineEdit {
                 background: rgba(30, 30, 60, 200);
                 border: 2px solid #00ffff;
@@ -82,7 +83,8 @@ class MainMenu(QMainWindow):
                 color: #00ffff;
                 font: 16px Orbitron;
             }
-        """)
+        """
+        )
 
         self.player_o_input = QLineEdit()
         self.player_o_input.setPlaceholderText("Player O")
@@ -95,7 +97,8 @@ class MainMenu(QMainWindow):
 
         self.size_combobox = QComboBox()
         self.size_combobox.addItems(["3x3 (Classic)", "9x9 (Extended)"])
-        self.size_combobox.setStyleSheet("""
+        self.size_combobox.setStyleSheet(
+            """
             QComboBox {
                 background: rgba(30, 30, 60, 200);
                 border: 2px solid #00ffff;
@@ -107,11 +110,13 @@ class MainMenu(QMainWindow):
             QComboBox::drop-down {
                 border: none;
             }
-        """)
+        """
+        )
 
         start_btn = SciFiButton("Start Game")
         start_btn.clicked.connect(self.start_game)
-        start_btn.setStyleSheet("""
+        start_btn.setStyleSheet(
+            """
             SciFiButton {
                 background: rgba(255, 0, 255, 100);
                 border: 2px solid #00ffff;
@@ -122,7 +127,8 @@ class MainMenu(QMainWindow):
             SciFiButton:hover {
                 background: rgba(255, 0, 255, 150);
             }
-        """)
+        """
+        )
 
         layout.addWidget(title)
         layout.addLayout(input_layout)
@@ -157,6 +163,7 @@ class MainMenu(QMainWindow):
         self.game_window.show()
         self.hide()
 
+
 class GameWindow(QMainWindow):
     def __init__(self, board_size, player_x, player_o):
         """
@@ -164,10 +171,7 @@ class GameWindow(QMainWindow):
         """
         super().__init__()
         self.board_size = board_size
-        self.players = {
-            "X": player_x,
-            "O": player_o
-        }
+        self.players = {"X": player_x, "O": player_o}
         self.required_to_win = 3 if board_size == 3 else 5
         self.initUI()
 
@@ -176,8 +180,9 @@ class GameWindow(QMainWindow):
         Sets up the game window UI, including the game grid and control buttons.
         """
         self.setWindowTitle("Cyber Tic Tac Toe")
-        self.setMinimumSize(800 if self.board_size == 9 else 600,
-                          850 if self.board_size == 9 else 700)
+        self.setMinimumSize(
+            800 if self.board_size == 9 else 600, 850 if self.board_size == 9 else 700
+        )
 
         scroll = QScrollArea()
         scroll.setWidgetResizable(True)
@@ -190,14 +195,16 @@ class GameWindow(QMainWindow):
         main_layout = QVBoxLayout()
         central_widget.setLayout(main_layout)
 
-        self.title_label = QLabel("Tic Tac Toe")
+        self.title_label = QLabel("Cyber Tic Tac Toe")
         self.title_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.title_label.setFont(QFont("Orbitron", 28, QFont.Weight.Bold))
 
         self.grid = QGridLayout()
         self.grid.setSpacing(5)
-        self.buttons = [[SciFiButton("") for _ in range(self.board_size)]
-                      for _ in range(self.board_size)]
+        self.buttons = [
+            [SciFiButton("") for _ in range(self.board_size)]
+            for _ in range(self.board_size)
+        ]
 
         button_style = """
             SciFiButton {
@@ -224,7 +231,8 @@ class GameWindow(QMainWindow):
         control_layout = QHBoxLayout()
 
         new_game_btn = SciFiButton("New Game")
-        new_game_btn.setStyleSheet("""
+        new_game_btn.setStyleSheet(
+            """
             SciFiButton {
                 background: rgba(255, 0, 255, 100);
                 border: 2px solid #00ffff;
@@ -235,10 +243,11 @@ class GameWindow(QMainWindow):
             SciFiButton:hover {
                 background: rgba(255, 0, 255, 150);
             }
-        """)
+        """
+        )
         new_game_btn.clicked.connect(self.reset_game)
 
-        menu_btn = SciFiButton("Go To Menu")
+        menu_btn = SciFiButton("Go to Main Menu")
         menu_btn.setStyleSheet(new_game_btn.styleSheet())
         menu_btn.clicked.connect(self.return_to_menu)
 
@@ -250,8 +259,9 @@ class GameWindow(QMainWindow):
         main_layout.addLayout(control_layout)
 
         self.current_player = random.choice(["X", "O"])
-        self.board = [[None for _ in range(self.board_size)]
-                    for _ in range(self.board_size)]
+        self.board = [
+            [None for _ in range(self.board_size)] for _ in range(self.board_size)
+        ]
 
         self.opacity_effect = QGraphicsOpacityEffect(self.title_label)
         self.title_label.setGraphicsEffect(self.opacity_effect)
@@ -362,8 +372,9 @@ class GameWindow(QMainWindow):
         Resets the game board and starts a new game.
         """
         self.current_player = random.choice(["X", "O"])
-        self.board = [[None for _ in range(self.board_size)]
-                     for _ in range(self.board_size)]
+        self.board = [
+            [None for _ in range(self.board_size)] for _ in range(self.board_size)
+        ]
         self.update_title()
         for row in self.buttons:
             for button in row:
@@ -384,7 +395,8 @@ if __name__ == "__main__":
     """
     app = QApplication(sys.argv)
     app.setWindowIcon(QIcon("./img/logo.png"))
-    app.setStyleSheet("""
+    app.setStyleSheet(
+        """
         * {
             color: #00ffff;
             font-family: 'Orbitron';
@@ -392,7 +404,8 @@ if __name__ == "__main__":
         QLabel {
             background: transparent;
         }
-    """)
+    """
+    )
 
     menu = MainMenu()
     menu.show()
