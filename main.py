@@ -58,11 +58,13 @@ class MainMenu(QMainWindow):
         Sets up the main menu UI, including title, input fields, and buttons.
         """
         self.setWindowTitle("Cyber Tic Tac Toe")
-        self.setFixedSize(600, 600)
+        self.setFixedSize(600, 650)
 
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
         layout = QVBoxLayout()
+        layout.setSpacing(15)
+        layout.setContentsMargins(40, 20, 40, 20)
         central_widget.setLayout(layout)
 
         title = QLabel("CYBER TIC TAC TOE")
@@ -113,6 +115,10 @@ class MainMenu(QMainWindow):
         """
         )
 
+        self.mode_combobox = QComboBox()
+        self.mode_combobox.addItems(["Offline", "Online - Host", "Online - Client"])
+        self.mode_combobox.setStyleSheet(self.size_combobox.styleSheet())
+
         start_btn = SciFiButton("Start Game")
         start_btn.clicked.connect(self.start_game)
         start_btn.setStyleSheet(
@@ -131,9 +137,14 @@ class MainMenu(QMainWindow):
         )
 
         layout.addWidget(title)
+        layout.addSpacing(10)
         layout.addLayout(input_layout)
+        layout.addSpacing(10)
         layout.addWidget(QLabel("Select Board Size:"))
         layout.addWidget(self.size_combobox)
+        layout.addSpacing(10)
+        layout.addWidget(QLabel("Game Mode:"))
+        layout.addWidget(self.mode_combobox)
         layout.addStretch()
         layout.addWidget(start_btn)
 
@@ -151,18 +162,29 @@ class MainMenu(QMainWindow):
 
     def start_game(self):
         """
-        Starts the game by opening the game window with the selected board size and player names.
+        Starts the game based on selected mode (offline/online-host/online-client).
         """
+        mode = self.mode_combobox.currentText()
         size_text = self.size_combobox.currentText()
         board_size = 3 if "3x3" in size_text else 9
 
         player_x = self.player_x_input.text() or "Player X"
         player_o = self.player_o_input.text() or "Player O"
 
-        self.game_window = GameWindow(board_size, player_x, player_o)
-        self.game_window.show()
-        self.hide()
-
+        if mode == "Offline":
+            self.game_window = GameWindow(board_size, player_x, player_o)
+            self.game_window.show()
+            self.hide()
+        elif mode == "Online - Host":
+            print("TODO: Launch server and wait for connection...")
+            # self.host_window = HostWindow(...)
+            # self.host_window.show()
+            # self.hide()
+        elif mode == "Online - Client":
+            print("TODO: Show server list and try to connect...")
+            # self.client_window = ClientWindow(...)
+            # self.client_window.show()
+            # self.hide()
 
 class GameWindow(QMainWindow):
     def __init__(self, board_size, player_x, player_o):
