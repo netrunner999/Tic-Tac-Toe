@@ -42,7 +42,6 @@ from PyQt6.QtGui import (
 
 import threading
 
-# Настройка логирования
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
@@ -122,7 +121,7 @@ class MainMenu(QMainWindow):
         self.size_combobox.setStyleSheet(
             """
             QComboBox {
-                background: rgba(30, 30, 60, 200);
+                background-color: rgba(30, 30, 60, 200);
                 border: 2px solid #00ffff;
                 border-radius: 10px;
                 padding: 10px;
@@ -132,8 +131,15 @@ class MainMenu(QMainWindow):
             QComboBox::drop-down {
                 border: none;
             }
-        """
-        )
+            QComboBox QAbstractItemView {
+                background-color: white;
+                color: black;
+                border: 2px solid #00ffff;
+                border-radius: 10px;
+                padding: 10px;
+                font: 16px Orbitron;
+            }
+            """)
 
         self.mode_combobox = QComboBox()
         self.mode_combobox.setStyleSheet(self.size_combobox.styleSheet())
@@ -194,18 +200,16 @@ class MainMenu(QMainWindow):
         mode = self.mode_combobox.currentText()
         is_online = "Онлайн" in mode
 
-        if mode == "Онлайн - клиент":
-            self.ip_input.show()
-            self.size_combobox.setEnabled(False)
-        else:
-            self.ip_input.hide()
-            self.size_combobox.setEnabled(True)
-
         if is_online:
+            self.ip_input.show() if mode == "Онлайн - клиент" else self.ip_input.hide()
+            self.size_combobox.setEnabled(False)
+            self.size_combobox.setCurrentIndex(0)  # Устанавливаем 3x3 для онлайн игры
             self.player_o_input.hide()
             self.player_o_label.hide()
             self.player_x_input.setPlaceholderText("Ваше имя")
         else:
+            self.ip_input.hide()
+            self.size_combobox.setEnabled(True)
             self.player_o_input.show()
             self.player_o_label.show()
             self.player_x_input.setPlaceholderText("Player X")
@@ -213,7 +217,12 @@ class MainMenu(QMainWindow):
     def start_game(self):
         try:
             mode = self.mode_combobox.currentText()
-            board_size = 3 if "3x3" in self.size_combobox.currentText() else 9
+            is_online = "Онлайн" in mode
+            board_size = (
+                3
+                if is_online
+                else (3 if "3x3" in self.size_combobox.currentText() else 9)
+            )
             player_name = self.player_x_input.text() or "Player"
             logger.info(
                 f"Starting game - Mode: {mode}, Board size: {board_size}, Player: {player_name}"
@@ -234,12 +243,10 @@ class MainMenu(QMainWindow):
                 logger.info("Starting online game as host")
                 from server import start_server
 
-                # Запускаем сервер в отдельном потоке
                 server_thread = threading.Thread(target=start_server)
                 server_thread.daemon = True
                 server_thread.start()
 
-                # Создаем окно игры
                 self.game_window = GameWindow(
                     board_size, player_name, None, mode="host"
                 )
@@ -249,12 +256,10 @@ class MainMenu(QMainWindow):
             elif mode == "Онлайн - клиент":
                 logger.info("Starting online game as client")
 
-                # Получаем IP адрес
                 ip = self.ip_input.text().strip()
                 if not ip:
                     raise ValueError("Не введён IP адрес")
 
-                # Создаем окно игры
                 self.game_window = GameWindow(
                     board_size, player_name, None, mode="client", server_ip=ip
                 )
@@ -286,7 +291,6 @@ class GameWindow(QMainWindow):
         self.symbol = None
         self.server_ip = server_ip
         self.current_player = "X"
-        # Игра активна сразу в оффлайн режиме
         self.game_active = mode == "offline"
 
         if mode in ("host", "offline"):
@@ -300,7 +304,6 @@ class GameWindow(QMainWindow):
             [None for _ in range(self.board_size)] for _ in range(self.board_size)
         ]
 
-        # Инициализируем UI компоненты
         self.setWindowTitle("Cyber Tic Tac Toe")
         self.setMinimumSize(
             800 if self.board_size == 9 else 600, 850 if self.board_size == 9 else 700
@@ -395,10 +398,8 @@ class GameWindow(QMainWindow):
 
         self.set_background()
 
-        # Теперь обновляем заголовок после инициализации всех компонентов
         self.update_title()
 
-        # Инициализируем клиент после создания UI
         if mode in ("host", "client"):
             try:
                 from client import GameClient
@@ -416,7 +417,6 @@ class GameWindow(QMainWindow):
                     },
                 )
 
-                # Пытаемся подключиться
                 if self.client.connect():
                     logger.info("Successfully connected to server")
                 else:
@@ -440,7 +440,6 @@ class GameWindow(QMainWindow):
         self.current_player = state["current_player"]
         self.game_active = state["game_active"]
 
-        # Обновляем UI
         for row in range(self.board_size):
             for col in range(self.board_size):
                 self.buttons[row][col].setText(self.board[row][col] or "")
@@ -481,18 +480,19 @@ class GameWindow(QMainWindow):
         """Обработка окончания игры"""
         self.game_active = False
         logger.info(f"Game ended: {reason}")
-
-        # Обновляем состояние доски из полученного состояния
         if state:
             self.game_state = state
             self.board = state["board"]
-            # Обновляем отображение кнопок
             for row in range(self.board_size):
                 for col in range(self.board_size):
                     self.buttons[row][col].setText(self.board[row][col] or "")
                     logger.info(
                         f"Updating button at {row},{col} with {self.board[row][col]}"
                     )
+        self.title_label.setText(f"Game Over: {reason.replace('X', '&#88;')}")
+        for row in self.buttons:
+            for button in row:
+                button.setEnabled(False)
 
         self.title_label.setText(f"Game Over: {reason}")
         for row in self.buttons:
@@ -535,7 +535,6 @@ class GameWindow(QMainWindow):
                     logger.info(f"Turn switched to {self.current_player}")
                     self.update_title()
             else:
-                # В онлайн режиме отправляем ход на сервер
                 if self.client and self.client.send_move(row, col):
                     logger.info("Move sent to server")
                 else:
@@ -592,26 +591,22 @@ class GameWindow(QMainWindow):
         if self.mode != "offline":
             if not self.game_active:
                 self.title_label.setText("Waiting for connection...")
-                # Делаем кнопки неактивными
                 for row in self.buttons:
                     for button in row:
                         button.setEnabled(False)
             elif self.symbol == self.current_player:
-                self.title_label.setText("Your Turn")
-                # Активируем кнопки только для текущего игрока
+                self.title_label.setText(f"{self.players[self.current_player].replace('X', '&#88;')}'s Turn")
                 for row in self.buttons:
                     for button in row:
                         button.setEnabled(True)
             else:
                 self.title_label.setText("Opponent's Turn")
-                # Делаем кнопки неактивными во время хода противника
                 for row in self.buttons:
                     for button in row:
                         button.setEnabled(False)
         else:
-            player_name = self.players[self.current_player]
+            player_name = self.players[self.current_player].replace('X', '&#88;')
             self.title_label.setText(f"{player_name}'s Turn")
-            # В оффлайн режиме кнопки всегда активны
             for row in self.buttons:
                 for button in row:
                     button.setEnabled(True)

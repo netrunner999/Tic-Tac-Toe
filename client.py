@@ -4,7 +4,6 @@ import threading
 import logging
 import sys
 
-# Настройка логирования
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
@@ -31,7 +30,6 @@ class GameClient:
             self.connected = True
             logger.info("Connected successfully")
 
-            # Запускаем поток для приема сообщений
             self.receive_thread = threading.Thread(target=self.receive_messages)
             self.receive_thread.daemon = True
             self.receive_thread.start()

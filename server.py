@@ -4,7 +4,6 @@ import json
 import logging
 import sys
 
-# Настройка логирования
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
@@ -64,7 +63,6 @@ class GameServer:
 
     def handle_client(self, client_socket, address):
         try:
-            # Назначаем символ игроку
             with self.lock:
                 if len(self.clients) == 0:
                     symbol = "X"
@@ -73,12 +71,10 @@ class GameServer:
                 self.clients.append((client_socket, symbol))
                 self.game_state["players"][symbol] = address[0]
 
-            # Отправляем игроку его символ
             client_socket.send(
                 json.dumps({"type": "assign", "symbol": symbol}).encode()
             )
 
-            # Если подключились оба игрока, начинаем игру
             if len(self.clients) == 2:
                 self.game_state["game_active"] = True
                 for client, _ in self.clients:
@@ -86,7 +82,6 @@ class GameServer:
                         json.dumps({"type": "start", "state": self.game_state}).encode()
                     )
 
-            # Основной цикл обработки сообщений от клиента
             while True:
                 try:
                     data = client_socket.recv(1024)
@@ -131,7 +126,6 @@ class GameServer:
             self.game_state["board"][row][col] = symbol
             self.game_state["current_player"] = "O" if symbol == "X" else "X"
 
-            # Сначала отправляем обновление состояния
             for client, _ in self.clients:
                 client.send(
                     json.dumps(
@@ -139,10 +133,8 @@ class GameServer:
                     ).encode()
                 )
 
-            # Затем проверяем победу или ничью
             if self.check_winner(row, col):
                 self.game_state["game_active"] = False
-                # Отправляем финальное состояние с победой
                 for client, _ in self.clients:
                     client.send(
                         json.dumps(
@@ -155,7 +147,6 @@ class GameServer:
                     )
             elif self.check_draw():
                 self.game_state["game_active"] = False
-                # Отправляем финальное состояние с ничьей
                 for client, _ in self.clients:
                     client.send(
                         json.dumps(
@@ -210,7 +201,6 @@ class GameServer:
                     self.game_state["players"][symbol] = None
                     break
 
-            # Если остался только один клиент, сбрасываем игру
             if len(self.clients) == 1:
                 self.game_state["game_active"] = False
                 remaining_client, _ = self.clients[0]

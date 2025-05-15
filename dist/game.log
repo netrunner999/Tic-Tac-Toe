@@ -1,0 +1,273 @@
+2025-05-15 20:35:47,291 - INFO - Starting application
+2025-05-15 20:35:47,370 - INFO - Initializing main menu
+2025-05-15 20:35:55,879 - INFO - Starting game - Mode: Оффлайн игра, Board size: 3, Player: Player
+2025-05-15 20:35:55,879 - INFO - Starting offline game with players: Player vs Player O
+2025-05-15 20:35:55,879 - INFO - Initializing game window - Mode: offline, Board size: 3
+2025-05-15 20:35:57,610 - INFO - Making move - row: 0, col: 0, player: X
+2025-05-15 20:35:57,611 - INFO - Turn switched to O
+2025-05-15 20:35:58,333 - INFO - Making move - row: 0, col: 1, player: O
+2025-05-15 20:35:58,333 - INFO - Turn switched to X
+2025-05-15 20:35:59,790 - INFO - Making move - row: 0, col: 2, player: X
+2025-05-15 20:35:59,791 - INFO - Turn switched to O
+2025-05-15 20:36:00,246 - INFO - Making move - row: 1, col: 1, player: O
+2025-05-15 20:36:00,246 - INFO - Turn switched to X
+2025-05-15 20:36:00,702 - INFO - Making move - row: 1, col: 2, player: X
+2025-05-15 20:36:00,702 - INFO - Turn switched to O
+2025-05-15 20:36:01,145 - INFO - Making move - row: 2, col: 2, player: O
+2025-05-15 20:36:01,145 - INFO - Turn switched to X
+2025-05-15 20:36:02,135 - INFO - Making move - row: 2, col: 1, player: X
+2025-05-15 20:36:02,136 - INFO - Turn switched to O
+2025-05-15 20:36:02,956 - INFO - Making move - row: 1, col: 0, player: O
+2025-05-15 20:36:02,956 - INFO - Turn switched to X
+2025-05-15 20:36:03,627 - INFO - Making move - row: 2, col: 0, player: X
+2025-05-15 20:36:03,627 - INFO - Game ended in draw
+2025-05-15 20:36:03,627 - INFO - Game ended: Draw!
+2025-05-15 20:36:06,263 - INFO - Making move - row: 0, col: 0, player: O
+2025-05-15 20:36:06,263 - INFO - Turn switched to X
+2025-05-15 20:36:06,769 - INFO - Making move - row: 0, col: 1, player: X
+2025-05-15 20:36:06,769 - INFO - Turn switched to O
+2025-05-15 20:36:07,425 - INFO - Making move - row: 1, col: 1, player: O
+2025-05-15 20:36:07,425 - INFO - Turn switched to X
+2025-05-15 20:36:08,034 - INFO - Making move - row: 0, col: 2, player: X
+2025-05-15 20:36:08,034 - INFO - Turn switched to O
+2025-05-15 20:36:08,596 - INFO - Making move - row: 2, col: 2, player: O
+2025-05-15 20:36:08,596 - INFO - Game won by O
+2025-05-15 20:36:08,596 - INFO - Game ended: Player O wins!
+2025-05-15 20:36:12,118 - INFO - Making move - row: 0, col: 1, player: X
+2025-05-15 20:36:12,118 - INFO - Turn switched to O
+2025-05-15 20:36:13,232 - INFO - Making move - row: 1, col: 0, player: O
+2025-05-15 20:36:13,233 - INFO - Turn switched to X
+2025-05-15 20:36:13,778 - INFO - Making move - row: 1, col: 1, player: X
+2025-05-15 20:36:13,779 - INFO - Turn switched to O
+2025-05-15 20:36:14,410 - INFO - Making move - row: 0, col: 2, player: O
+2025-05-15 20:36:14,412 - INFO - Turn switched to X
+2025-05-15 20:36:14,915 - INFO - Making move - row: 2, col: 1, player: X
+2025-05-15 20:36:14,916 - INFO - Game won by X
+2025-05-15 20:36:14,916 - INFO - Game ended: Player wins!
+2025-05-15 20:36:17,863 - INFO - Initializing main menu
+2025-05-15 20:36:17,894 - INFO - Closing game window
+2025-05-15 20:36:26,509 - INFO - Starting game - Mode: Онлайн - хост, Board size: 3, Player: Alex
+2025-05-15 20:36:26,510 - INFO - Starting online game as host
+2025-05-15 20:36:26,513 - INFO - Initializing game window - Mode: host, Board size: 3
+2025-05-15 20:36:26,515 - INFO - Server started on 0.0.0.0:8765
+2025-05-15 20:36:26,518 - INFO - Initializing client with host: localhost
+2025-05-15 20:36:26,518 - INFO - Connecting to localhost:8765
+2025-05-15 20:36:26,522 - INFO - Connected successfully
+2025-05-15 20:36:26,522 - INFO - New connection from ('127.0.0.1', 49801)
+2025-05-15 20:36:26,522 - INFO - Successfully connected to server
+2025-05-15 20:36:26,550 - INFO - Received message: {'type': 'assign', 'symbol': 'X'}
+2025-05-15 20:36:26,550 - INFO - Assigned symbol: X
+2025-05-15 20:36:28,954 - INFO - Starting application
+2025-05-15 20:36:29,033 - INFO - Initializing main menu
+2025-05-15 20:36:40,948 - INFO - Starting game - Mode: Онлайн - клиент, Board size: 3, Player: Fox
+2025-05-15 20:36:40,948 - INFO - Starting online game as client
+2025-05-15 20:36:40,948 - INFO - Initializing game window - Mode: client, Board size: 3
+2025-05-15 20:36:40,964 - INFO - Initializing client with host: localhost
+2025-05-15 20:36:40,964 - INFO - Connecting to localhost:8765
+2025-05-15 20:36:40,971 - INFO - Connected successfully
+2025-05-15 20:36:40,971 - INFO - New connection from ('127.0.0.1', 49811)
+2025-05-15 20:36:40,971 - INFO - Successfully connected to server
+2025-05-15 20:36:40,971 - INFO - Received message: {'type': 'start', 'state': {'board': [[None, None, None], [None, None, None], [None, None, None]], 'current_player': 'X', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}}
+2025-05-15 20:36:40,971 - INFO - Game started
+2025-05-15 20:36:40,995 - INFO - Received message: {'type': 'assign', 'symbol': 'O'}
+2025-05-15 20:36:40,995 - INFO - Assigned symbol: O
+2025-05-15 20:36:40,995 - INFO - Received message: {'type': 'start', 'state': {'board': [[None, None, None], [None, None, None], [None, None, None]], 'current_player': 'X', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}}
+2025-05-15 20:36:40,995 - INFO - Game started
+2025-05-15 20:36:46,894 - INFO - Making move - row: 0, col: 0, player: X
+2025-05-15 20:36:46,894 - INFO - Move sent to server
+2025-05-15 20:36:46,894 - INFO - Received message from ('127.0.0.1', 49801): {'type': 'move', 'row': 0, 'col': 0}
+2025-05-15 20:36:46,894 - INFO - Received message: {'type': 'state_update', 'state': {'board': [['X', None, None], [None, None, None], [None, None, None]], 'current_player': 'O', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}}
+2025-05-15 20:36:46,894 - INFO - Received state update: {'board': [['X', None, None], [None, None, None], [None, None, None]], 'current_player': 'O', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}
+2025-05-15 20:36:46,894 - INFO - Received message: {'type': 'state_update', 'state': {'board': [['X', None, None], [None, None, None], [None, None, None]], 'current_player': 'O', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}}
+2025-05-15 20:36:46,894 - INFO - Received state update: {'board': [['X', None, None], [None, None, None], [None, None, None]], 'current_player': 'O', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}
+2025-05-15 20:36:47,855 - INFO - Making move - row: 0, col: 1, player: O
+2025-05-15 20:36:47,855 - INFO - Move sent to server
+2025-05-15 20:36:47,855 - INFO - Received message from ('127.0.0.1', 49811): {'type': 'move', 'row': 0, 'col': 1}
+2025-05-15 20:36:47,855 - INFO - Received message: {'type': 'state_update', 'state': {'board': [['X', 'O', None], [None, None, None], [None, None, None]], 'current_player': 'X', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}}
+2025-05-15 20:36:47,855 - INFO - Received state update: {'board': [['X', 'O', None], [None, None, None], [None, None, None]], 'current_player': 'X', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}
+2025-05-15 20:36:47,855 - INFO - Received message: {'type': 'state_update', 'state': {'board': [['X', 'O', None], [None, None, None], [None, None, None]], 'current_player': 'X', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}}
+2025-05-15 20:36:47,856 - INFO - Received state update: {'board': [['X', 'O', None], [None, None, None], [None, None, None]], 'current_player': 'X', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}
+2025-05-15 20:36:48,793 - INFO - Making move - row: 1, col: 1, player: X
+2025-05-15 20:36:48,793 - INFO - Received message from ('127.0.0.1', 49801): {'type': 'move', 'row': 1, 'col': 1}
+2025-05-15 20:36:48,794 - INFO - Move sent to server
+2025-05-15 20:36:48,794 - INFO - Received message: {'type': 'state_update', 'state': {'board': [['X', 'O', None], [None, 'X', None], [None, None, None]], 'current_player': 'O', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}}
+2025-05-15 20:36:48,794 - INFO - Received state update: {'board': [['X', 'O', None], [None, 'X', None], [None, None, None]], 'current_player': 'O', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}
+2025-05-15 20:36:48,794 - INFO - Received message: {'type': 'state_update', 'state': {'board': [['X', 'O', None], [None, 'X', None], [None, None, None]], 'current_player': 'O', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}}
+2025-05-15 20:36:48,794 - INFO - Received state update: {'board': [['X', 'O', None], [None, 'X', None], [None, None, None]], 'current_player': 'O', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}
+2025-05-15 20:36:54,267 - INFO - Making move - row: 0, col: 2, player: O
+2025-05-15 20:36:54,267 - INFO - Move sent to server
+2025-05-15 20:36:54,267 - INFO - Received message from ('127.0.0.1', 49811): {'type': 'move', 'row': 0, 'col': 2}
+2025-05-15 20:36:54,268 - INFO - Received message: {'type': 'state_update', 'state': {'board': [['X', 'O', 'O'], [None, 'X', None], [None, None, None]], 'current_player': 'X', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}}
+2025-05-15 20:36:54,268 - INFO - Received message: {'type': 'state_update', 'state': {'board': [['X', 'O', 'O'], [None, 'X', None], [None, None, None]], 'current_player': 'X', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}}
+2025-05-15 20:36:54,268 - INFO - Received state update: {'board': [['X', 'O', 'O'], [None, 'X', None], [None, None, None]], 'current_player': 'X', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}
+2025-05-15 20:36:54,268 - INFO - Received state update: {'board': [['X', 'O', 'O'], [None, 'X', None], [None, None, None]], 'current_player': 'X', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}
+2025-05-15 20:36:57,288 - INFO - Making move - row: 2, col: 2, player: X
+2025-05-15 20:36:57,288 - INFO - Move sent to server
+2025-05-15 20:36:57,288 - INFO - Received message from ('127.0.0.1', 49801): {'type': 'move', 'row': 2, 'col': 2}
+2025-05-15 20:36:57,289 - INFO - Received message: {'type': 'state_update', 'state': {'board': [['X', 'O', 'O'], [None, 'X', None], [None, None, 'X']], 'current_player': 'O', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}}
+2025-05-15 20:36:57,289 - INFO - Received message: {'type': 'state_update', 'state': {'board': [['X', 'O', 'O'], [None, 'X', None], [None, None, 'X']], 'current_player': 'O', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}}
+2025-05-15 20:36:57,289 - INFO - Received state update: {'board': [['X', 'O', 'O'], [None, 'X', None], [None, None, 'X']], 'current_player': 'O', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}
+2025-05-15 20:36:57,289 - INFO - Received state update: {'board': [['X', 'O', 'O'], [None, 'X', None], [None, None, 'X']], 'current_player': 'O', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}
+2025-05-15 20:36:57,290 - INFO - Received message: {'type': 'game_end', 'reason': 'X wins', 'state': {'board': [['X', 'O', 'O'], [None, 'X', None], [None, None, 'X']], 'current_player': 'O', 'game_active': False, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}}
+2025-05-15 20:36:57,290 - INFO - Game ended: X wins
+2025-05-15 20:36:57,290 - INFO - Updating button at 0,0 with X
+2025-05-15 20:36:57,290 - INFO - Updating button at 0,1 with O
+2025-05-15 20:36:57,290 - INFO - Updating button at 0,2 with O
+2025-05-15 20:36:57,290 - INFO - Updating button at 1,0 with None
+2025-05-15 20:36:57,290 - INFO - Updating button at 1,1 with X
+2025-05-15 20:36:57,290 - INFO - Updating button at 1,2 with None
+2025-05-15 20:36:57,290 - INFO - Updating button at 2,0 with None
+2025-05-15 20:36:57,290 - INFO - Updating button at 2,1 with None
+2025-05-15 20:36:57,290 - INFO - Updating button at 2,2 with X
+2025-05-15 20:36:57,291 - INFO - Received message: {'type': 'game_end', 'reason': 'X wins', 'state': {'board': [['X', 'O', 'O'], [None, 'X', None], [None, None, 'X']], 'current_player': 'O', 'game_active': False, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}}
+2025-05-15 20:36:57,291 - INFO - Game ended: X wins
+2025-05-15 20:36:57,291 - INFO - Updating button at 0,0 with X
+2025-05-15 20:36:57,291 - INFO - Updating button at 0,1 with O
+2025-05-15 20:36:57,291 - INFO - Updating button at 0,2 with O
+2025-05-15 20:36:57,291 - INFO - Updating button at 1,0 with None
+2025-05-15 20:36:57,291 - INFO - Updating button at 1,1 with X
+2025-05-15 20:36:57,291 - INFO - Updating button at 1,2 with None
+2025-05-15 20:36:57,291 - INFO - Updating button at 2,0 with None
+2025-05-15 20:36:57,291 - INFO - Updating button at 2,1 with None
+2025-05-15 20:36:57,291 - INFO - Updating button at 2,2 with X
+2025-05-15 20:37:08,728 - INFO - Received message from ('127.0.0.1', 49801): {'type': 'reset'}
+2025-05-15 20:37:08,728 - INFO - Received message: {'type': 'start', 'state': {'board': [[None, None, None], [None, None, None], [None, None, None]], 'current_player': 'X', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}}
+2025-05-15 20:37:08,728 - INFO - Game started
+2025-05-15 20:37:08,728 - INFO - Received message: {'type': 'start', 'state': {'board': [[None, None, None], [None, None, None], [None, None, None]], 'current_player': 'X', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}}
+2025-05-15 20:37:08,729 - INFO - Game started
+2025-05-15 20:37:11,915 - INFO - Making move - row: 1, col: 1, player: X
+2025-05-15 20:37:11,915 - INFO - Move sent to server
+2025-05-15 20:37:11,915 - INFO - Received message from ('127.0.0.1', 49801): {'type': 'move', 'row': 1, 'col': 1}
+2025-05-15 20:37:11,917 - INFO - Received message: {'type': 'state_update', 'state': {'board': [[None, None, None], [None, 'X', None], [None, None, None]], 'current_player': 'O', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}}
+2025-05-15 20:37:11,917 - INFO - Received state update: {'board': [[None, None, None], [None, 'X', None], [None, None, None]], 'current_player': 'O', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}
+2025-05-15 20:37:11,917 - INFO - Received message: {'type': 'state_update', 'state': {'board': [[None, None, None], [None, 'X', None], [None, None, None]], 'current_player': 'O', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}}
+2025-05-15 20:37:11,917 - INFO - Received state update: {'board': [[None, None, None], [None, 'X', None], [None, None, None]], 'current_player': 'O', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}
+2025-05-15 20:37:14,737 - INFO - Making move - row: 0, col: 2, player: O
+2025-05-15 20:37:14,737 - INFO - Move sent to server
+2025-05-15 20:37:14,737 - INFO - Received message from ('127.0.0.1', 49811): {'type': 'move', 'row': 0, 'col': 2}
+2025-05-15 20:37:14,738 - INFO - Received message: {'type': 'state_update', 'state': {'board': [[None, None, 'O'], [None, 'X', None], [None, None, None]], 'current_player': 'X', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}}
+2025-05-15 20:37:14,738 - INFO - Received state update: {'board': [[None, None, 'O'], [None, 'X', None], [None, None, None]], 'current_player': 'X', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}
+2025-05-15 20:37:14,738 - INFO - Received message: {'type': 'state_update', 'state': {'board': [[None, None, 'O'], [None, 'X', None], [None, None, None]], 'current_player': 'X', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}}
+2025-05-15 20:37:14,739 - INFO - Received state update: {'board': [[None, None, 'O'], [None, 'X', None], [None, None, None]], 'current_player': 'X', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}
+2025-05-15 20:37:16,066 - INFO - Making move - row: 1, col: 0, player: X
+2025-05-15 20:37:16,066 - INFO - Move sent to server
+2025-05-15 20:37:16,067 - INFO - Received message from ('127.0.0.1', 49801): {'type': 'move', 'row': 1, 'col': 0}
+2025-05-15 20:37:16,067 - INFO - Received message: {'type': 'state_update', 'state': {'board': [[None, None, 'O'], ['X', 'X', None], [None, None, None]], 'current_player': 'O', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}}
+2025-05-15 20:37:16,067 - INFO - Received message: {'type': 'state_update', 'state': {'board': [[None, None, 'O'], ['X', 'X', None], [None, None, None]], 'current_player': 'O', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}}
+2025-05-15 20:37:16,067 - INFO - Received state update: {'board': [[None, None, 'O'], ['X', 'X', None], [None, None, None]], 'current_player': 'O', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}
+2025-05-15 20:37:20,474 - INFO - Making move - row: 2, col: 2, player: O
+2025-05-15 20:37:20,474 - INFO - Move sent to server
+2025-05-15 20:37:20,474 - INFO - Received message from ('127.0.0.1', 49811): {'type': 'move', 'row': 2, 'col': 2}
+2025-05-15 20:37:20,475 - INFO - Received message: {'type': 'state_update', 'state': {'board': [[None, None, 'O'], ['X', 'X', None], [None, None, 'O']], 'current_player': 'X', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}}
+2025-05-15 20:37:20,475 - INFO - Received state update: {'board': [[None, None, 'O'], ['X', 'X', None], [None, None, 'O']], 'current_player': 'X', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}
+2025-05-15 20:37:20,475 - INFO - Received message: {'type': 'state_update', 'state': {'board': [[None, None, 'O'], ['X', 'X', None], [None, None, 'O']], 'current_player': 'X', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}}
+2025-05-15 20:37:20,475 - INFO - Received state update: {'board': [[None, None, 'O'], ['X', 'X', None], [None, None, 'O']], 'current_player': 'X', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}
+2025-05-15 20:37:21,795 - INFO - Making move - row: 1, col: 2, player: X
+2025-05-15 20:37:21,795 - INFO - Move sent to server
+2025-05-15 20:37:21,795 - INFO - Received message from ('127.0.0.1', 49801): {'type': 'move', 'row': 1, 'col': 2}
+2025-05-15 20:37:21,796 - INFO - Received message: {'type': 'state_update', 'state': {'board': [[None, None, 'O'], ['X', 'X', 'X'], [None, None, 'O']], 'current_player': 'O', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}}
+2025-05-15 20:37:21,796 - INFO - Received state update: {'board': [[None, None, 'O'], ['X', 'X', 'X'], [None, None, 'O']], 'current_player': 'O', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}
+2025-05-15 20:37:21,796 - INFO - Received message: {'type': 'state_update', 'state': {'board': [[None, None, 'O'], ['X', 'X', 'X'], [None, None, 'O']], 'current_player': 'O', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}}
+2025-05-15 20:37:21,796 - INFO - Received message: {'type': 'game_end', 'reason': 'X wins', 'state': {'board': [[None, None, 'O'], ['X', 'X', 'X'], [None, None, 'O']], 'current_player': 'O', 'game_active': False, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}}
+2025-05-15 20:37:21,796 - INFO - Received state update: {'board': [[None, None, 'O'], ['X', 'X', 'X'], [None, None, 'O']], 'current_player': 'O', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}
+2025-05-15 20:37:21,796 - INFO - Game ended: X wins
+2025-05-15 20:37:21,796 - INFO - Updating button at 0,0 with None
+2025-05-15 20:37:21,797 - INFO - Updating button at 0,1 with None
+2025-05-15 20:37:21,797 - INFO - Received message: {'type': 'game_end', 'reason': 'X wins', 'state': {'board': [[None, None, 'O'], ['X', 'X', 'X'], [None, None, 'O']], 'current_player': 'O', 'game_active': False, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}}
+2025-05-15 20:37:21,797 - INFO - Game ended: X wins
+2025-05-15 20:37:21,797 - INFO - Updating button at 0,2 with O
+2025-05-15 20:37:21,797 - INFO - Updating button at 0,0 with None
+2025-05-15 20:37:21,797 - INFO - Updating button at 0,1 with None
+2025-05-15 20:37:21,797 - INFO - Updating button at 1,0 with X
+2025-05-15 20:37:21,797 - INFO - Updating button at 0,2 with O
+2025-05-15 20:37:21,797 - INFO - Updating button at 1,0 with X
+2025-05-15 20:37:21,797 - INFO - Updating button at 1,1 with X
+2025-05-15 20:37:21,797 - INFO - Updating button at 1,2 with X
+2025-05-15 20:37:21,797 - INFO - Updating button at 2,0 with None
+2025-05-15 20:37:21,797 - INFO - Updating button at 2,1 with None
+2025-05-15 20:37:21,797 - INFO - Updating button at 2,0 with None
+2025-05-15 20:37:21,797 - INFO - Updating button at 2,2 with O
+2025-05-15 20:37:21,797 - INFO - Updating button at 2,1 with None
+2025-05-15 20:37:21,798 - INFO - Updating button at 2,2 with O
+2025-05-15 20:37:24,761 - INFO - Received message from ('127.0.0.1', 49801): {'type': 'reset'}
+2025-05-15 20:37:24,761 - INFO - Received message: {'type': 'start', 'state': {'board': [[None, None, None], [None, None, None], [None, None, None]], 'current_player': 'X', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}}
+2025-05-15 20:37:24,761 - INFO - Game started
+2025-05-15 20:37:24,761 - INFO - Received message: {'type': 'start', 'state': {'board': [[None, None, None], [None, None, None], [None, None, None]], 'current_player': 'X', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}}
+2025-05-15 20:37:24,761 - INFO - Game started
+2025-05-15 20:37:29,198 - INFO - Making move - row: 1, col: 1, player: X
+2025-05-15 20:37:29,199 - INFO - Move sent to server
+2025-05-15 20:37:29,199 - INFO - Received message from ('127.0.0.1', 49801): {'type': 'move', 'row': 1, 'col': 1}
+2025-05-15 20:37:29,199 - INFO - Received message: {'type': 'state_update', 'state': {'board': [[None, None, None], [None, 'X', None], [None, None, None]], 'current_player': 'O', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}}
+2025-05-15 20:37:29,199 - INFO - Received state update: {'board': [[None, None, None], [None, 'X', None], [None, None, None]], 'current_player': 'O', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}
+2025-05-15 20:37:29,199 - INFO - Received message: {'type': 'state_update', 'state': {'board': [[None, None, None], [None, 'X', None], [None, None, None]], 'current_player': 'O', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}}
+2025-05-15 20:37:29,199 - INFO - Received state update: {'board': [[None, None, None], [None, 'X', None], [None, None, None]], 'current_player': 'O', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}
+2025-05-15 20:37:30,345 - INFO - Making move - row: 0, col: 0, player: O
+2025-05-15 20:37:30,345 - INFO - Move sent to server
+2025-05-15 20:37:30,345 - INFO - Received message from ('127.0.0.1', 49811): {'type': 'move', 'row': 0, 'col': 0}
+2025-05-15 20:37:30,345 - INFO - Received message: {'type': 'state_update', 'state': {'board': [['O', None, None], [None, 'X', None], [None, None, None]], 'current_player': 'X', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}}
+2025-05-15 20:37:30,345 - INFO - Received state update: {'board': [['O', None, None], [None, 'X', None], [None, None, None]], 'current_player': 'X', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}
+2025-05-15 20:37:30,345 - INFO - Received message: {'type': 'state_update', 'state': {'board': [['O', None, None], [None, 'X', None], [None, None, None]], 'current_player': 'X', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}}
+2025-05-15 20:37:30,346 - INFO - Received state update: {'board': [['O', None, None], [None, 'X', None], [None, None, None]], 'current_player': 'X', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}
+2025-05-15 20:37:31,394 - INFO - Making move - row: 0, col: 1, player: X
+2025-05-15 20:37:31,394 - INFO - Move sent to server
+2025-05-15 20:37:31,394 - INFO - Received message from ('127.0.0.1', 49801): {'type': 'move', 'row': 0, 'col': 1}
+2025-05-15 20:37:31,395 - INFO - Received message: {'type': 'state_update', 'state': {'board': [['O', 'X', None], [None, 'X', None], [None, None, None]], 'current_player': 'O', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}}
+2025-05-15 20:37:31,395 - INFO - Received state update: {'board': [['O', 'X', None], [None, 'X', None], [None, None, None]], 'current_player': 'O', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}
+.0.0.1', 'O': '127.0.0.1'}}}
+2025-05-15 20:37:31,395 - INFO - Received state update: {'board': [['O', 'X', None], [None, 'X', None], [None, None, None]], 'current_player': 'O', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}
+2025-05-15 20:37:34,213 - INFO - Making move - row: 2, col: 0, player: O
+2025-05-15 20:37:34,213 - INFO - Move sent to server
+2025-05-15 20:37:34,213 - INFO - Received message from ('127.0.0.1', 49811): {'type': 'move', 'row': 2, 'col': 0}
+2025-05-15 20:37:34,214 - INFO - Received message: {'type': 'state_update', 'state': {'board': [['O', 'X', None], [None, 'X', None], ['O', None, None]], 'current_player': 'X', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}}
+2025-05-15 20:37:34,214 - INFO - Received message: {'type': 'state_update', 'state': {'board': [['O', 'X', None], [None, 'X', None], ['O', None, None]], 'current_player': 'X', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}}
+2025-05-15 20:37:34,214 - INFO - Received state update: {'board': [['O', 'X', None], [None, 'X', None], ['O', None, None]], 'current_player': 'X', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}
+2025-05-15 20:37:34,214 - INFO - Received state update: {'board': [['O', 'X', None], [None, 'X', None], ['O', None, None]], 'current_player': 'X', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}
+2025-05-15 20:37:35,359 - INFO - Making move - row: 2, col: 1, player: X
+2025-05-15 20:37:35,360 - INFO - Move sent to server
+2025-05-15 20:37:35,360 - INFO - Received message from ('127.0.0.1', 49801): {'type': 'move', 'row': 2, 'col': 1}
+2025-05-15 20:37:35,360 - INFO - Received message: {'type': 'state_update', 'state': {'board': [['O', 'X', None], [None, 'X', None], ['O', 'X', None]], 'current_player': 'O', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}}
+2025-05-15 20:37:35,360 - INFO - Received state update: {'board': [['O', 'X', None], [None, 'X', None], ['O', 'X', None]], 'current_player': 'O', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}
+2025-05-15 20:37:35,360 - INFO - Received message: {'type': 'state_update', 'state': {'board': [['O', 'X', None], [None, 'X', None], ['O', 'X', None]], 'current_player': 'O', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}}
+2025-05-15 20:37:35,360 - INFO - Received state update: {'board': [['O', 'X', None], [None, 'X', None], ['O', 'X', None]], 'current_player': 'O', 'game_active': True, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}
+yers': {'X': '127.0.0.1', 'O': '127.0.0.1'}}}
+2025-05-15 20:37:35,361 - INFO - Game ended: X wins
+2025-05-15 20:37:35,361 - INFO - Updating button at 0,0 with O
+2025-05-15 20:37:35,361 - INFO - Updating button at 0,1 with X
+2025-05-15 20:37:35,361 - INFO - Updating button at 0,2 with None
+2025-05-15 20:37:35,361 - INFO - Updating button at 1,0 with None
+nd', 'reason': 'X wins', 'state': {'board': [['O', 'X', None], [None, 'X', None], ['O', 'X', None]], 'current_player': 'O', 'game_active': False, 'players': {'X': '127.0.0.1', 'O': '127.0.0.1'}}}
+2025-05-15 20:37:35,361 - INFO - Updating button at 1,1 with X
+2025-05-15 20:37:35,361 - INFO - Game ended: X wins
+2025-05-15 20:37:35,361 - INFO - Updating button at 1,2 with None
+2025-05-15 20:37:35,361 - INFO - Updating button at 0,0 with O
+2025-05-15 20:37:35,361 - INFO - Updating button at 2,0 with O
+2025-05-15 20:37:35,361 - INFO - Updating button at 0,1 with X
+2025-05-15 20:37:35,361 - INFO - Updating button at 2,1 with X
+2025-05-15 20:37:35,361 - INFO - Updating button at 0,2 with None
+2025-05-15 20:37:35,361 - INFO - Updating button at 2,2 with None
+2025-05-15 20:37:35,361 - INFO - Updating button at 1,0 with None
+2025-05-15 20:37:35,361 - INFO - Updating button at 1,1 with X
+2025-05-15 20:37:35,361 - INFO - Updating button at 1,2 with None
+2025-05-15 20:37:35,361 - INFO - Updating button at 2,0 with O
+2025-05-15 20:37:35,362 - INFO - Updating button at 2,1 with X
+2025-05-15 20:37:35,362 - INFO - Updating button at 2,2 with None
+2025-05-15 20:37:38,230 - INFO - Initializing main menu
+2025-05-15 20:37:38,265 - INFO - Closing game window
+2025-05-15 20:37:38,265 - INFO - Closing client connection
+2025-05-15 20:37:38,265 - ERROR - Error handling message from ('127.0.0.1', 49801): [WinError 10054] Удаленный хост принудительно разорвал существующее подключение
+2025-05-15 20:37:38,266 - ERROR - Error processing message: [WinError 10053] Программа на вашем хост-компьютере разорвала установленное подключение
+2025-05-15 20:37:38,272 - INFO - Received message: {'type': 'game_end', 'reason': 'opponent_disconnected', 'state': {'board': [['O', 'X', None], [None, 'X', None], ['O', 'X', None]], 'current_player': 'O', 'game_active': False, 'players': {'X': None, 'O': '127.0.0.1'}}}
+2025-05-15 20:37:38,272 - INFO - Game ended: opponent_disconnected
+2025-05-15 20:37:38,272 - INFO - Updating button at 0,0 with O
+2025-05-15 20:37:38,272 - INFO - Updating button at 0,1 with X
+2025-05-15 20:37:38,272 - INFO - Updating button at 0,2 with None
+2025-05-15 20:37:38,272 - INFO - Updating button at 1,0 with None
+2025-05-15 20:37:38,272 - INFO - Updating button at 1,1 with X
+2025-05-15 20:37:38,272 - INFO - Updating button at 1,2 with None
+2025-05-15 20:37:38,272 - INFO - Updating button at 2,0 with O
+2025-05-15 20:37:38,272 - INFO - Updating button at 2,1 with X
+2025-05-15 20:37:38,272 - INFO - Updating button at 2,2 with None
+2025-05-15 20:37:40,588 - ERROR - Error processing message: [WinError 10054] Удаленный хост принудительно разорвал существующее подключение
+2025-05-15 20:37:41,080 - INFO - Initializing main menu
+2025-05-15 20:37:41,110 - INFO - Closing game window
+2025-05-15 20:37:41,110 - INFO - Closing client connection
