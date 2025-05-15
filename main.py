@@ -1,5 +1,12 @@
 import sys
 import random
+import asyncio
+from qasync import QEventLoop
+import websockets
+import logging
+import traceback
+from datetime import datetime
+from PyQt6.QtWidgets import QMessageBox
 from PyQt6.QtWidgets import (
     QApplication,
     QMainWindow,
@@ -33,6 +40,16 @@ from PyQt6.QtGui import (
     QIcon,
 )
 
+import threading
+
+# Настройка логирования
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    handlers=[logging.StreamHandler(sys.stdout), logging.FileHandler("game.log")],
+)
+logger = logging.getLogger(__name__)
+
 
 class SciFiButton(QPushButton):
     def __init__(self, text, parent=None):
@@ -44,12 +61,14 @@ class SciFiButton(QPushButton):
         self.setMinimumSize(60, 60)
         self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
 
+
 class MainMenu(QMainWindow):
     def __init__(self):
         """
         Initializes the main menu window and sets up the UI components.
         """
         super().__init__()
+        logger.info("Initializing main menu")
         self.initUI()
         self.set_background()
 
@@ -94,7 +113,8 @@ class MainMenu(QMainWindow):
 
         input_layout.addWidget(QLabel("Player X Name:"))
         input_layout.addWidget(self.player_x_input)
-        input_layout.addWidget(QLabel("Player O Name:"))
+        self.player_o_label = QLabel("Player O Name:")
+        input_layout.addWidget(self.player_o_label)
         input_layout.addWidget(self.player_o_input)
 
         self.size_combobox = QComboBox()
@@ -116,8 +136,13 @@ class MainMenu(QMainWindow):
         )
 
         self.mode_combobox = QComboBox()
-        self.mode_combobox.addItems(["Offline", "Online - Host", "Online - Client"])
         self.mode_combobox.setStyleSheet(self.size_combobox.styleSheet())
+
+        self.ip_input = QLineEdit()
+        self.ip_input.setPlaceholderText("IP хоста (например: ws://127.0.0.1:8765)")
+        self.ip_input.setStyleSheet(self.player_x_input.styleSheet())
+        self.ip_input.hide()
+        layout.addWidget(self.ip_input)
 
         start_btn = SciFiButton("Start Game")
         start_btn.clicked.connect(self.start_game)
@@ -148,6 +173,11 @@ class MainMenu(QMainWindow):
         layout.addStretch()
         layout.addWidget(start_btn)
 
+        self.mode_combobox.addItems(
+            ["Оффлайн игра", "Онлайн - хост", "Онлайн - клиент"]
+        )
+        self.mode_combobox.currentIndexChanged.connect(self.update_input_fields)
+
     def set_background(self):
         """
         Sets the gradient background for the main menu.
@@ -160,47 +190,117 @@ class MainMenu(QMainWindow):
         palette.setBrush(QPalette.ColorRole.Window, QBrush(gradient))
         self.setPalette(palette)
 
-    def start_game(self):
-        """
-        Starts the game based on selected mode (offline/online-host/online-client).
-        """
+    def update_input_fields(self):
         mode = self.mode_combobox.currentText()
-        size_text = self.size_combobox.currentText()
-        board_size = 3 if "3x3" in size_text else 9
+        is_online = "Онлайн" in mode
 
-        player_x = self.player_x_input.text() or "Player X"
-        player_o = self.player_o_input.text() or "Player O"
+        if mode == "Онлайн - клиент":
+            self.ip_input.show()
+            self.size_combobox.setEnabled(False)
+        else:
+            self.ip_input.hide()
+            self.size_combobox.setEnabled(True)
 
-        if mode == "Offline":
-            self.game_window = GameWindow(board_size, player_x, player_o)
-            self.game_window.show()
-            self.hide()
-        elif mode == "Online - Host":
-            print("TODO: Launch server and wait for connection...")
-            # self.host_window = HostWindow(...)
-            # self.host_window.show()
-            # self.hide()
-        elif mode == "Online - Client":
-            print("TODO: Show server list and try to connect...")
-            # self.client_window = ClientWindow(...)
-            # self.client_window.show()
-            # self.hide()
+        if is_online:
+            self.player_o_input.hide()
+            self.player_o_label.hide()
+            self.player_x_input.setPlaceholderText("Ваше имя")
+        else:
+            self.player_o_input.show()
+            self.player_o_label.show()
+            self.player_x_input.setPlaceholderText("Player X")
+
+    def start_game(self):
+        try:
+            mode = self.mode_combobox.currentText()
+            board_size = 3 if "3x3" in self.size_combobox.currentText() else 9
+            player_name = self.player_x_input.text() or "Player"
+            logger.info(
+                f"Starting game - Mode: {mode}, Board size: {board_size}, Player: {player_name}"
+            )
+
+            if mode == "Оффлайн игра":
+                player_o = self.player_o_input.text() or "Player O"
+                logger.info(
+                    f"Starting offline game with players: {player_name} vs {player_o}"
+                )
+                self.game_window = GameWindow(
+                    board_size, player_name, player_o, mode="offline"
+                )
+                self.game_window.show()
+                self.hide()
+
+            elif mode == "Онлайн - хост":
+                logger.info("Starting online game as host")
+                from server import start_server
+
+                # Запускаем сервер в отдельном потоке
+                server_thread = threading.Thread(target=start_server)
+                server_thread.daemon = True
+                server_thread.start()
+
+                # Создаем окно игры
+                self.game_window = GameWindow(
+                    board_size, player_name, None, mode="host"
+                )
+                self.game_window.show()
+                self.hide()
+
+            elif mode == "Онлайн - клиент":
+                logger.info("Starting online game as client")
+
+                # Получаем IP адрес
+                ip = self.ip_input.text().strip()
+                if not ip:
+                    raise ValueError("Не введён IP адрес")
+
+                # Создаем окно игры
+                self.game_window = GameWindow(
+                    board_size, player_name, None, mode="client", server_ip=ip
+                )
+                self.game_window.show()
+                self.hide()
+
+        except Exception as e:
+            logger.error(f"Error starting game: {str(e)}")
+            logger.error(traceback.format_exc())
+            QMessageBox.critical(
+                self,
+                "Ошибка",
+                f"Произошла ошибка при запуске игры:\n{e}",
+            )
+
 
 class GameWindow(QMainWindow):
-    def __init__(self, board_size, player_x, player_o):
+    def __init__(self, board_size, player_x, player_o, mode="offline", server_ip=None):
         """
         Initializes the game window with the specified board size and player names.
         """
         super().__init__()
-        self.board_size = board_size
+        logger.info(
+            f"Initializing game window - Mode: {mode}, Board size: {board_size}"
+        )
         self.players = {"X": player_x, "O": player_o}
-        self.required_to_win = 3 if board_size == 3 else 5
-        self.initUI()
+        self.mode = mode
+        self.client = None
+        self.symbol = None
+        self.server_ip = server_ip
+        self.current_player = "X"
+        # Игра активна сразу в оффлайн режиме
+        self.game_active = mode == "offline"
 
-    def initUI(self):
-        """
-        Sets up the game window UI, including the game grid and control buttons.
-        """
+        if mode in ("host", "offline"):
+            self.board_size = board_size
+            self.required_to_win = 3 if board_size == 3 else 5
+        else:
+            self.board_size = 3
+            self.required_to_win = 3
+
+        self.board = [
+            [None for _ in range(self.board_size)] for _ in range(self.board_size)
+        ]
+
+        # Инициализируем UI компоненты
         self.setWindowTitle("Cyber Tic Tac Toe")
         self.setMinimumSize(
             800 if self.board_size == 9 else 600, 850 if self.board_size == 9 else 700
@@ -248,6 +348,8 @@ class GameWindow(QMainWindow):
                 button = self.buttons[row][col]
                 button.setStyleSheet(button_style)
                 button.clicked.connect(lambda _, r=row, c=col: self.make_move(r, c))
+                # Кнопки активны сразу в оффлайн режиме
+                button.setEnabled(mode == "offline")
                 self.grid.addWidget(button, row, col)
 
         control_layout = QHBoxLayout()
@@ -280,11 +382,6 @@ class GameWindow(QMainWindow):
         main_layout.addLayout(self.grid)
         main_layout.addLayout(control_layout)
 
-        self.current_player = random.choice(["X", "O"])
-        self.board = [
-            [None for _ in range(self.board_size)] for _ in range(self.board_size)
-        ]
-
         self.opacity_effect = QGraphicsOpacityEffect(self.title_label)
         self.title_label.setGraphicsEffect(self.opacity_effect)
 
@@ -298,38 +395,163 @@ class GameWindow(QMainWindow):
 
         self.set_background()
 
-    def set_background(self):
-        """
-        Sets the gradient background for the game window.
-        """
-        gradient = QLinearGradient(0, 0, 0, self.height())
-        gradient.setColorAt(0.0, QColor(10, 10, 30))
-        gradient.setColorAt(1.0, QColor(30, 10, 40))
+        # Теперь обновляем заголовок после инициализации всех компонентов
+        self.update_title()
 
-        palette = self.palette()
-        palette.setBrush(QPalette.ColorRole.Window, QBrush(gradient))
-        self.setPalette(palette)
+        # Инициализируем клиент после создания UI
+        if mode in ("host", "client"):
+            try:
+                from client import GameClient
+
+                host = self.server_ip or "localhost"
+                logger.info(f"Initializing client with host: {host}")
+                self.client = GameClient(
+                    host,
+                    callbacks={
+                        "on_assign": self.assign_symbol,
+                        "on_start": self.online_start,
+                        "on_state_update": self.handle_state_update,
+                        "on_game_end": self.handle_game_end,
+                        "on_error": self.handle_error,
+                    },
+                )
+
+                # Пытаемся подключиться
+                if self.client.connect():
+                    logger.info("Successfully connected to server")
+                else:
+                    raise Exception("Failed to connect to server")
+
+            except Exception as e:
+                logger.error(f"Error initializing client: {str(e)}")
+                logger.error(traceback.format_exc())
+                QMessageBox.critical(
+                    self,
+                    "Ошибка",
+                    f"Ошибка инициализации клиента:\n{e}",
+                )
+                self.close()
+
+    def handle_state_update(self, state):
+        """Обработка обновления состояния игры от сервера"""
+        logger.info(f"Received state update: {state}")
+        self.game_state = state
+        self.board = state["board"]
+        self.current_player = state["current_player"]
+        self.game_active = state["game_active"]
+
+        # Обновляем UI
+        for row in range(self.board_size):
+            for col in range(self.board_size):
+                self.buttons[row][col].setText(self.board[row][col] or "")
+                self.buttons[row][col].setEnabled(
+                    self.game_active
+                    and self.board[row][col] is None
+                    and self.symbol == self.current_player
+                )
+
+        self.update_title()
+
+    def handle_error(self, message):
+        """Обработка ошибок от сервера"""
+        logger.error(f"Server error: {message}")
+        QMessageBox.critical(self, "Ошибка сервера", message)
+        self.close()
+
+    def assign_symbol(self, symbol):
+        self.symbol = symbol
+        self.players[symbol] = self.players["X"]
+        logger.info(f"Assigned symbol: {symbol}")
+        self.update_title()
+
+    def online_start(self):
+        self.board = [
+            [None for _ in range(self.board_size)] for _ in range(self.board_size)
+        ]
+        self.current_player = "X"
+        self.game_active = True
+        logger.info("Game started")
+        self.update_title()
+        for row in self.buttons:
+            for button in row:
+                button.setText("")
+                button.setEnabled(True)
+
+    def handle_game_end(self, reason, state=None):
+        """Обработка окончания игры"""
+        self.game_active = False
+        logger.info(f"Game ended: {reason}")
+
+        # Обновляем состояние доски из полученного состояния
+        if state:
+            self.game_state = state
+            self.board = state["board"]
+            # Обновляем отображение кнопок
+            for row in range(self.board_size):
+                for col in range(self.board_size):
+                    self.buttons[row][col].setText(self.board[row][col] or "")
+                    logger.info(
+                        f"Updating button at {row},{col} with {self.board[row][col]}"
+                    )
+
+        self.title_label.setText(f"Game Over: {reason}")
+        for row in self.buttons:
+            for button in row:
+                button.setEnabled(False)
 
     def make_move(self, row, col):
-        """
-        Handles a player's move by updating the board and checking for a winner or draw.
-        """
-        button = self.buttons[row][col]
-        if not self.board[row][col]:
-            button.setText(self.current_player)
-            self.board[row][col] = self.current_player
+        try:
+            if not self.game_active:
+                logger.warning("Attempted to make move while game is not active")
+                return
 
-            original_style = button.styleSheet()
-            button.setStyleSheet(original_style + "color: #ff00ff;")
-            QTimer.singleShot(200, lambda: button.setStyleSheet(original_style))
+            if self.board[row][col]:
+                logger.warning(f"Cell already occupied: row={row}, col={col}")
+                return
 
-            if self.check_winner(row, col):
-                self.show_winner()
-            elif self.check_draw():
-                self.show_draw()
+            if self.mode != "offline" and self.symbol != self.current_player:
+                logger.warning("Not player's turn")
+                return
+
+            logger.info(
+                f"Making move - row: {row}, col: {col}, player: {self.current_player}"
+            )
+
+            if self.mode == "offline":
+                self.board[row][col] = self.current_player
+                self.buttons[row][col].setText(self.current_player)
+                self.buttons[row][col].setEnabled(False)
+
+                if self.check_winner(row, col):
+                    self.game_active = False
+                    logger.info(f"Game won by {self.current_player}")
+                    self.handle_game_end(f"{self.players[self.current_player]} wins!")
+                elif self.check_draw():
+                    self.game_active = False
+                    logger.info("Game ended in draw")
+                    self.handle_game_end("Draw!")
+                else:
+                    self.current_player = "O" if self.current_player == "X" else "X"
+                    logger.info(f"Turn switched to {self.current_player}")
+                    self.update_title()
             else:
-                self.current_player = "O" if self.current_player == "X" else "X"
-                self.update_title()
+                # В онлайн режиме отправляем ход на сервер
+                if self.client and self.client.send_move(row, col):
+                    logger.info("Move sent to server")
+                else:
+                    logger.error("Failed to send move to server")
+                    QMessageBox.critical(
+                        self, "Ошибка", "Не удалось отправить ход на сервер"
+                    )
+
+        except Exception as e:
+            logger.error(f"Error making move: {str(e)}")
+            logger.error(traceback.format_exc())
+            QMessageBox.critical(
+                self,
+                "Ошибка",
+                f"Произошла ошибка при выполнении хода:\n{e}",
+            )
 
     def check_winner(self, last_row, last_col):
         """
@@ -366,37 +588,45 @@ class GameWindow(QMainWindow):
         """
         return all(cell is not None for row in self.board for cell in row)
 
-    def show_winner(self):
-        """
-        Displays the winner and disables all buttons on the board.
-        """
-        for row in self.buttons:
-            for button in row:
-                button.setEnabled(False)
-        winner_name = self.players[self.current_player]
-        self.title_label.setText(f"{winner_name} WINS!")
-
-    def show_draw(self):
-        """
-        Displays a draw message when the game ends in a tie.
-        """
-        self.title_label.setText("DRAW!")
-
     def update_title(self):
-        """
-        Updates the title to indicate the current player's turn.
-        """
-        player_name = self.players[self.current_player]
-        self.title_label.setText(f"{player_name}'s Turn")
+        if self.mode != "offline":
+            if not self.game_active:
+                self.title_label.setText("Waiting for connection...")
+                # Делаем кнопки неактивными
+                for row in self.buttons:
+                    for button in row:
+                        button.setEnabled(False)
+            elif self.symbol == self.current_player:
+                self.title_label.setText("Your Turn")
+                # Активируем кнопки только для текущего игрока
+                for row in self.buttons:
+                    for button in row:
+                        button.setEnabled(True)
+            else:
+                self.title_label.setText("Opponent's Turn")
+                # Делаем кнопки неактивными во время хода противника
+                for row in self.buttons:
+                    for button in row:
+                        button.setEnabled(False)
+        else:
+            player_name = self.players[self.current_player]
+            self.title_label.setText(f"{player_name}'s Turn")
+            # В оффлайн режиме кнопки всегда активны
+            for row in self.buttons:
+                for button in row:
+                    button.setEnabled(True)
 
     def reset_game(self):
-        """
-        Resets the game board and starts a new game.
-        """
+        if self.mode != "offline":
+            if self.client:
+                self.client.send_reset()
+            return
+
         self.current_player = random.choice(["X", "O"])
         self.board = [
             [None for _ in range(self.board_size)] for _ in range(self.board_size)
         ]
+        self.game_active = True
         self.update_title()
         for row in self.buttons:
             for button in row:
@@ -411,14 +641,41 @@ class GameWindow(QMainWindow):
         self.menu.show()
         self.close()
 
+    def closeEvent(self, event):
+        try:
+            logger.info("Closing game window")
+            if self.client:
+                logger.info("Closing client connection")
+                self.client.close()
+            super().closeEvent(event)
+        except Exception as e:
+            logger.error(f"Error closing window: {str(e)}")
+            logger.error(traceback.format_exc())
+            event.accept()
+
+    def set_background(self):
+        """
+        Sets the gradient background for the game window.
+        """
+        gradient = QLinearGradient(0, 0, 0, self.height())
+        gradient.setColorAt(0.0, QColor(10, 10, 30))
+        gradient.setColorAt(1.0, QColor(30, 10, 40))
+
+        palette = self.palette()
+        palette.setBrush(QPalette.ColorRole.Window, QBrush(gradient))
+        self.setPalette(palette)
+
+
 if __name__ == "__main__":
     """
     Entry point of the application. Initializes and starts the main menu.
     """
-    app = QApplication(sys.argv)
-    app.setWindowIcon(QIcon("./img/logo.png"))
-    app.setStyleSheet(
-        """
+    try:
+        logger.info("Starting application")
+        app = QApplication(sys.argv)
+        app.setWindowIcon(QIcon("./img/logo.png"))
+        app.setStyleSheet(
+            """
         * {
             color: #00ffff;
             font-family: 'Orbitron';
@@ -426,9 +683,19 @@ if __name__ == "__main__":
         QLabel {
             background: transparent;
         }
-    """
-    )
+        """
+        )
 
-    menu = MainMenu()
-    menu.show()
-    sys.exit(app.exec())
+        loop = QEventLoop(app)
+        asyncio.set_event_loop(loop)
+
+        menu = MainMenu()
+        menu.show()
+
+        with loop:
+            loop.run_forever()
+
+    except Exception as e:
+        logger.error(f"Fatal error: {str(e)}")
+        logger.error(traceback.format_exc())
+        sys.exit(1)
